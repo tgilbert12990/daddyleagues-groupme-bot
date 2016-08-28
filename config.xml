@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="yes"?>
+<all>
+	<config>
+		<baseurl>http://daddyleagues.com/</baseurl>
+		<league>put the league's daddyleagues directory here</league>
+		<cmdprefix>?dl</cmdprefix>
+		<pslimit>5</pslimit>
+	</config>
+	<info>
+		<league>The name of your league</league>
+		<commish>your commisioner</commish>
+		<rules>a link to your rules</rules>
+		<owners>a link to the owners list</owners>
+		<adv>next advcance time</adv>
+		<draft>nexty draft time</draft>
+	</info>
+	<twitch>
+		<buf>sometwitchuser</buf>
+		<mia/>
+		<ne/>
+		<nyj/>
+		
+		<bal/>
+		<cin/>
+		<cle/>
+		<pit/>
+		
+		<hou/>
+		<ind/>
+		<jac/>
+		<ten/>
+		
+		<den/>
+		<kc/>
+		<oak/>
+		<sd/>
+		
+		<dal/>
+		<nyg/>
+		<phi/>
+		<was/>
+		
+		<chi/>
+		<det/>
+		<gb/>
+		<min/>
+		
+		<atl/>
+		<car/>
+		<no/>
+		<tb/>
+		
+		<ari/>
+		<sea/>
+		<sf/>
+		<stl/>
+	</twitch>
+</all>
