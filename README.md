@@ -72,11 +72,12 @@ This is why they are currently not included in the helpme message.
 	* position: the position (qb, hb, wr, ...)
 	* team: can be abbreviation or team name (ten or titans)
 	* rookie: search only rookies (r or rookie)
+	* not specifying any options will return the top players in the league
 * tws team week: Returns the score for the specified tean and week
   * team: can be abbreviation or team name (ten or titans)
   * week: 1-17, wc, dr, cc, sb
 * sync week: Gets the scores/schedule for a specified week
-*NOTE* This command almost never finishes before it timeos out. 
+*NOTE* This command almost never finishes before it times out. 
   * week: 1-17, wc, dr, cc, sb
 * week: Gets the current week according to daddyleagues
 * helpme: Returns a help message
@@ -91,13 +92,13 @@ These commands get info from config.xml
   url (p or popout)
 * rules: Returns the rules
 * info [key]: Returns info based on the key 
-  * key: optional. a key that exists in the info portion of config.xml
+  * key: a key that exists in the info portion of config.xml
   * if no key is specified, it returns all info. 
 
 #### Admin
 
 * config [key]: Returns config info based on the key 
-  * key: optional. a key that exists in the config portion of config.xml
+  * key: a key that exists in the config portion of config.xml
   * if no key is specified, it returns all config info. 
 * set key1 key2 [value]: sets the value of an attribute
   * key1: 3 options:
