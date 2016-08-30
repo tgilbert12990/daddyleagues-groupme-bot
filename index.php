@@ -62,33 +62,24 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 		case "twitch": // get Twitch link
 			sendTwitchLink(array_slice($command, 1));
 			break;
-			
+
+		case "rules": // get link to rule book
+			sendMsg("Rule Book: $rules");
+			break;
+
 		case "info": // get info
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
 			}
 			sendInfo($command[1]);
 			break;
-			
-		case "img": // get img
-			if (!array_key_exists(1, $command) || $command[1] == "") {
-				$command[1] = "all";
-			}
-			sendImg($command[1]);
-			break;
 
 		case "helpme": // get help
 			sendHelp();
-			break;
+			// break;
 
 		default: 
-			if (array_key_exists($cmd, $xmlArr["info"])) {
-				sendInfo($cmd);
-			}
-			elseif(array_key_exists($cmd, $xmlArr["img"])) {
-				sendImg($cmd);
-			}
-			elseif ($isAdmin) { // is admin chat?
+			if ($isAdmin) { // is admin chat?
 				include("adminCommands.php");
 			}
 			else { // main chat
@@ -105,6 +96,5 @@ else if (!$msgText && !$json) { // testing zone
 	//sendMsg("Rule Book: $rules");
 	//sendTwitchLink(array("nyj", "P"));
 	//setCommand(array("info", "test"));
-	//sendImg($xmlArr["img"]["scalp"]);
 }
 ?>

@@ -29,32 +29,21 @@ function setCommand($options) {
 	$options = array_slice($options, 1);
 	$setWorked = false;
 	if (array_key_exists($command, $xmlArr)) {
-<<<<<<< HEAD
 		if ($command == "config") {
 			$setWorked = setConfig($options);
-=======
-		if ($command == "twitch") {
-			$setWorked = setTwitch($options);
->>>>>>> origin/master
 		}
 		elseif ($command == "info") {
 			$setWorked = setInfo($options);
 		}
-<<<<<<< HEAD
 		elseif ($command == "img") {
 			$setWorked = setImg($options);
 		}
 		elseif ($command == "twitch") {
 			$setWorked = setTwitch($options);
-=======
-		elseif ($command == "config") {
-			$setWorked = setConfig($options);
->>>>>>> origin/master
 		}
 	}
 }
 
-<<<<<<< HEAD
 function setConfig($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
@@ -72,8 +61,6 @@ function setConfig($options) {
 	}
 }
 
-=======
->>>>>>> origin/master
 function setInfo($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
@@ -83,10 +70,6 @@ function setInfo($options) {
 	else {
 		unset($xml->info->{strtolower($options[0])});
 	};
-<<<<<<< HEAD
-=======
-	$xml->twitch->{$team} = $options[1];
->>>>>>> origin/master
 	if ($xml->asXml($xmlFile)) {
 		sendMsg("Info update successful");
 	}
@@ -95,7 +78,6 @@ function setInfo($options) {
 	}
 }
 
-<<<<<<< HEAD
 function setImg($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
@@ -110,23 +92,6 @@ function setImg($options) {
 	}
 	else {
 		sendMsg("Img update unsuccessful");
-=======
-function setConfig($options) {
-	global $xml, $xmlFile;
-	if (count($options) > 1) {
-		$options[1] = join(" ", array_slice($options, 1));
-		$xml->config->{strtolower($options[0])} = $options[1];
-	}
-	else {
-		unset($xml->config->{strtolower($options[0])});
-	}
-	$xml->twitch->{$team} = $options[1];
-	if ($xml->asXml($xmlFile)) {
-		sendMsg("Config update successful");
-	}
-	else {
-		sendMsg("Config update unsuccessful");
->>>>>>> origin/master
 	}
 }
 
@@ -147,8 +112,4 @@ function setTwitch($options) {
 		sendMsg("Twitch update unsuccessful");
 	}
 }
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> origin/master

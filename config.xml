@@ -2,24 +2,20 @@
 <all>
 	<config>
 		<baseurl>http://daddyleagues.com/</baseurl>
-		<league>TSL</league>
-		<cmdprefix>?</cmdprefix>
+		<league>put the league's daddyleagues directory here</league>
+		<cmdprefix>?dl</cmdprefix>
 		<pslimit>5</pslimit>
 	</config>
 	<info>
-		<league>The Test League (TTL)</league>
-		<commish>TheWitt</commish>
-		<rules>https://docs.google.com/document/d/1DHAiI_80G_LQ_MPx-SIMF27gK4MH-wBEPP0OAKCU9oQ/edit?usp=sharing</rules>
-		<owners>https://docs.google.com/document/d/1PAxMPuLNopNNYbFm3Khhngn8nw5eRTbDNb0Ls7TG2FY/edit?usp=sharing</owners>
-		<adv>9/3, 5pm Central</adv>
-		<draft>9/3, 5pm Central</draft>
+		<league>The name of your league</league>
+		<commish>your commisioner</commish>
+		<rules>a link to your rules</rules>
+		<owners>a link to the owners list</owners>
+		<adv>next advcance time</adv>
+		<draft>nexty draft time</draft>
 	</info>
-	<img>
-		<scalp>https://symonsez.files.wordpress.com/2009/08/scalp_edited.jpg</scalp>
-		<ring>http://vignette3.wikia.nocookie.net/lotr/images/9/9b/TheOneRing.jpg</ring>
-	</img>
 	<twitch>
-		<buf>sometwitchname</buf>
+		<buf>sometwitchuser</buf>
 		<mia/>
 		<ne/>
 		<nyj/>
@@ -32,7 +28,7 @@
 		<hou/>
 		<ind/>
 		<jac/>
-		<ten>signmantsl</ten>
+		<ten/>
 		
 		<den/>
 		<kc/>

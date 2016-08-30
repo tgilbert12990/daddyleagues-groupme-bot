@@ -86,19 +86,14 @@ This is why they are currently not included in the helpme message.
 
 These commands get info from config.xml
 
-* twitch team [team2] [popout]: Returns a link to the team's twitch
-  * team: can be abbreviation or team name (ten or titans); if "list",
-  a list of the twitch names is returned
-  * team2: if specified, a multitwitch link is returned
+* twitch team [popout]: Returns a link to the team's twitch
+  * team: can be abbreviation or team name (ten or titans)
   * poput: optional. Makes the command return a link to the popout 
   url (p or popout)
 * rules: Returns the rules
 * info [key]: Returns info based on the key 
   * key: a key that exists in the info portion of config.xml
-  * if no key is specified, it returns all info
-* img [key]: Returns an image based on the key 
-  * key: a key that exists in the img portion of config.xml
-  * if no key is specified, it returns a list of images
+  * if no key is specified, it returns all info. 
 
 #### Admin
 
@@ -109,15 +104,9 @@ These commands get info from config.xml
   * key1: 3 options:
     * config
 	* info
-	* img
 	* twitch
   * key2: an  existing or new attribute in the key1 portion of config.xml
   * value: case-sensitive. the value. if not specified, key2 is delted from key1
-
---
-
-I still need to cleanup the code some more. I know at least a couple of
-unnecessary lines exist.
 
 --
 
