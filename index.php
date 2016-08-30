@@ -6,26 +6,11 @@ $xml = simplexml_load_file($xmlFile);
 // convert to array
 $xmlArr = xml2array($xml);
 
-// easy to access arrays
+// easy to access config vars
 $cmd_prefix = $xmlArr["config"]["cmdprefix"];
 $base_url = $xmlArr["config"]["baseurl"];
 $league = $xmlArr["config"]["league"];
 $search_limit = $xmlArr["config"]["pslimit"];
-
-// easy to accerss info
-$rules = $xmlArr["info"]["rules"];
-$ownerList = $xmlArr["info"]["owners"];
-// the info array
-$importantInfo = $xmlArr["info"];
-// the help message for info
-$infohelp = "options are:";
-foreach ($importantInfo as $key => $value) {
-	$infohelp .= " $key,";
-}
-$infohelp = substr($infohelp, 0, -1);
-$importantInfo["help"] = $infohelp;
-// twitch names array
-$twitchNames = $xmlArr["twitch"];
 
 // get the message as json
 $cont = file_get_contents("php://input");

@@ -430,7 +430,8 @@ function sendTwitchLink($options) {
 }
 
 function sendInfo($opt = "all") {
-	global $importantInfo;
+	global $xmlArr;
+	$importantInfo = $xmlArr["info"];
 	$opt = strtolower($opt);
 	$msg = "";
 	if ($opt == "all") {
