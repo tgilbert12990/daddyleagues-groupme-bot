@@ -52,7 +52,7 @@ function sendMsg( $msg ){
 	else {
 		$body = sprintf('{"text":%s,"bot_id":"%s"}', json_encode($msg), $bot_token);
 		$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
-		//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
+		echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
 	}
 }
 
@@ -82,11 +82,14 @@ function getTeamWeekScore($team, $week) {
 	$classname = "scheduleweek";
 	$query = "//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]";
 	$scores = $xpath->query($query, $scoresDiv);
-	$pattern = '/\sWK\s\d+/i';
+	$pattern = '/\sWK\s'. $week .'\s/i';
+	//$pattern = '/\sWK\s\d+/i';
+	echo "<p>$pattern</p>";
 	$replacement = '';
 	$found = FALSE;
 	$retStr = "";
 	foreach ($scores as $s) {
+		echo "<p>".stristr($s->nodeValue, "WK " . $week)."</p>";
 		if (stristr($s->nodeValue, "WK " . $week)) {
 			$found = TRUE;
 			$weekScore = preg_replace($pattern, $replacement, $s->nodeValue);
@@ -105,6 +108,7 @@ function getTeamWeekScore($team, $week) {
 				}
 				$retStr = "$team - BYE";
 			}
+			break;
 		}
 	}
 	if (!$retStr) {
