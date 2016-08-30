@@ -99,7 +99,7 @@ function setTwitch($options) {
 	global $xml, $xmlFile;
 	$team = "";
 	$origiTeam;
-	$team = getTeam($options[0]);
+	$team = getTeam(strtolower($options[0]));
 	$origiTeam = $options[0];
 	if (!$team) {
 		return;
