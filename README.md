@@ -39,6 +39,7 @@ as the bots.
 	the owner list there)
 	* adv: the next scheduled advance
 	* draft: the next scheduled draft
+	* botdev: I ask that you leave this setting as-is
   * twitch attributes
     * put the twitch user name for each team's owner 
 2. Upload the files to a server.
@@ -99,6 +100,8 @@ These commands get info from config.xml
 * img [key]: Returns an image based on the key 
   * key: a key that exists in the img portion of config.xml
   * if no key is specified, it returns a list of images
+* key: shorthand for "info key" and "img key"
+  * searches "info" first, then "img" if not found
 
 #### Admin
 
@@ -106,18 +109,13 @@ These commands get info from config.xml
   * key: a key that exists in the config portion of config.xml
   * if no key is specified, it returns all config info. 
 * set key1 key2 [value]: sets the value of an attribute
-  * key1: 3 options:
+  * key1: 4 options:
     * config
 	* info
 	* img
 	* twitch
   * key2: an  existing or new attribute in the key1 portion of config.xml
   * value: case-sensitive. the value. if not specified, key2 is delted from key1
-
---
-
-I still need to cleanup the code some more. I know at least a couple of
-unnecessary lines exist.
 
 --
 
