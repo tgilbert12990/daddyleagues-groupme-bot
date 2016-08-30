@@ -21,9 +21,8 @@ $positions = array(
 	"cb", "ss","fs"
 );
 
-// Send a message from the bot to the group it's registered in. bot_token comes from config.php
+// Send a message from the bot to the group it's registered in.
 function sendMsg( $msg ){
-	global $access_token;
 	global $bot_token;
 	$url = "https://api.groupme.com/v3/bots/post";
 	
@@ -55,6 +54,15 @@ function sendMsg( $msg ){
 		$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
 		//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
 	}
+}
+
+// Send an image from the bot to the group it's registered in.
+function sendImgMsg( $img ){
+	global $bot_token;
+	$url = "https://api.groupme.com/v3/bots/post";
+	$body = sprintf('{"text":"","attachments":[{"type":"image","url":%s}],"bot_id":"%s"}', json_encode($img), $bot_token);
+	$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
+	//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
 }
 
 function getTeamWeekScore($team, $week) {
@@ -354,31 +362,68 @@ function sendCurrentWeek() {
 function sendTwitchLink($options) {
 	$popout = false;
 	$team = "";
+	$team2 = "";
 	$origiTeam;
+	$origiTeam;
+	
 	foreach($options as $opt) {
-		$opt = strtolower($opt);
 		if ($opt == "p" || $opt == "popout") {
 			$popout = true;
 		}
+		elseif (!$team) {
+			if ($opt == "list") {
+				$team = $opt;
+			}
+			else {
+				$team = getTeam($opt);
+				$origiTeam = $opt;
+			}
+		}
 		else {
-			$team = getTeam($opt);
-			$origiTeam = $opt;
+			$team2 = getTeam($opt);
+			$origiTeam2 = $opt;
 		}
 	}
+	
 	if (!$team) {
 		return;
 	}
-	global $twitchNames;
-	$twitchURL = "https://www.twitch.tv/";
-	$twitchName = $twitchNames[$team];
 	$msg = "";
-	if (!$twitchName) {
-		$msg = "No twitch name listed for " . $origiTeam;
+	global $xmlArr;
+	$twitchNames = $xmlArr["twitch"];
+	if ($team2) {
+		$multiURL = "http://multitwitch.tv/";
+		$twitchName = $twitchNames[$team];
+		$twitchName2 = $twitchNames[$team2];
+		if (!$twitchName) {
+			$msg = "No twitch name listed for " . $origiTeam;
+		}
+		elseif (!$twitchName2) {
+			$msg = "No twitch name listed for " . $origiTeam2;
+		}
+		else {
+			$msg = "$multiURL$twitchName/$twitchName2";
+		}
 	}
 	else {
-		$msg = $twitchURL . $twitchName; 
-		if ($popout) {
-			$msg .= "/popout";
+		if ($team == "list") {
+			foreach ($twitchNames as $key => $value) {
+				$msg .= "$key: $value\n";
+			}
+			$msg = substr($msg,0, -1);
+		} 
+		else { 
+			$twitchURL = "https://www.twitch.tv/";
+			$twitchName = $twitchNames[$team];
+			if (!$twitchName) {
+				$msg = "No twitch name listed for " . $origiTeam;
+			}
+			else {
+				$msg = $twitchURL . $twitchName; 
+				if ($popout) {
+					$msg .= "/popout";
+				}
+			}
 		}
 	}
 	sendMsg($msg);
@@ -398,18 +443,43 @@ function sendInfo($opt = "all") {
 		$msg = $opt . ": " . $importantInfo[$opt];
 	}
 	sendMsg($msg);
-} 
+}
+
+function sendImg($opt = "all") {
+	global $xmlArr;
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		foreach($xmlArr["img"] as $k => $v) {
+			$msg .= $k . ": " . $v . " \n";
+		}
+		$msg = substr($msg, 0, -1);
+		sendMsg($msg);
+	}
+	elseif (key_exists($opt, $xmlArr["img"])) {
+		sendImgMsg($xmlArr["img"][$opt]);
+	}
+}
 
 function sendHelp() {
 	global $league;
 	global $cmd_prefix;
+	global $isAdmin;
 	$helpStr = format("Command Prefix: {0}
 League: {1}
 Commands: 
-{0}rules                : Gets a link to the rule book
 {0}twitch team [popout] : Gets a link to the twitch for the specified team
-{0}info [option]        : Gets info based on specified option (e.g. adv, draft)
-{0}helpme        : This is what was just called", $cmd_prefix, $league);
+{0}info [key] : Gets info based on specified key (e.g. rules, adv, owners, draft)
+{0}img [key] : Gets info based on specified key (e.g. scalp, ring)
+{0}key : Shorthand for {0}info key and {0}img key (e.g. {0}rules, {0}scalp)
+{0}helpme : This is what was just called", $cmd_prefix, $league);
+	if ($isAdmin) {
+		$helpStr .= format("
+ADMIN COMMANDS
+{0}config [key] : Gets config info based on specified key (e.g. cmdprefix, etc)
+{0}set key1 key2 [value] : Sets info, config, or twitch values
+", $cmd_prefix);
+	}
 	sendMsg($helpStr);
 	/*
 {0}tl team              : Gets the DaddyLeague link for that team
