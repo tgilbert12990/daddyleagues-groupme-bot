@@ -3,6 +3,12 @@
 // get xml config file
 $xmlFile = "config.xml";
 $xml = simplexml_load_file($xmlFile);
+if (!$xml) {
+	echo "Failed loading XML\n";
+	foreach(libxml_get_errors() as $error) {
+		echo "<p>", $error->message, "</p>";
+	}
+}
 // convert to array
 $xmlArr = xml2array($xml);
 
@@ -45,6 +51,9 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			break;
 
 		case "twitch": // get Twitch link
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "list";
+			}
 			sendTwitchLink(array_slice($command, 1));
 			break;
 			
@@ -61,17 +70,47 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			}
 			sendImg($command[1]);
 			break;
+			
+		case "youtube": // get img
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			sendYoutube($command[1]);
+			break;
+			
+		case "custom": // get img
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			sendCustom($command[1]);
+			break;
+			
+		case "emoji": // get img
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			sendEmoji($command[1]);
+			break;
 
 		case "helpme": // get help
 			sendHelp();
 			break;
 
-		default: 
-			if (array_key_exists($cmd, $xmlArr["info"])) {
+		default:
+			if(array_key_exists($cmd, $xmlArr["custom"])) {
+				sendCustom($cmd);
+			} 
+			elseif (array_key_exists($cmd, $xmlArr["info"])) {
 				sendInfo($cmd);
 			}
 			elseif(array_key_exists($cmd, $xmlArr["img"])) {
 				sendImg($cmd);
+			}
+			elseif(array_key_exists($cmd, $xmlArr["youtube"])) {
+				sendYoutube($cmd);
+			}
+			elseif(array_key_exists($cmd, $xmlArr["emoji"])) {
+				sendEmoji($cmd);
 			}
 			elseif ($isAdmin) { // is admin chat?
 				include("adminCommands.php");
@@ -83,7 +122,7 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 	}
 } 
 else if (!$msgText && !$json) { // testing zone
-	//sendTeamWeekScore("bal", "8");
+	//sendTeamWeekScore("ten", "1");
 	//sendLeagueScoresForWeek("8");
 	//sendPlayerSearch(array("marcus"));
 	//sendCurrentWeek();
@@ -91,5 +130,6 @@ else if (!$msgText && !$json) { // testing zone
 	//sendTwitchLink(array("nyj", "P"));
 	//setCommand(array("info", "test"));
 	//sendImg($xmlArr["img"]["scalp"]);
+	setCustom(array("testing", "this is a test"));
 }
 ?>

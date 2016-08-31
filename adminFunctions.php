@@ -35,8 +35,17 @@ function setCommand($options) {
 		elseif ($command == "info") {
 			$setWorked = setInfo($options);
 		}
+		elseif ($command == "youtube") {
+			$setWorked = setYoutube($options);
+		}
+		elseif ($command == "custom") {
+			$setWorked = setCustom($options);
+		}
 		elseif ($command == "img") {
 			$setWorked = setImg($options);
+		}
+		elseif ($command == "emoji") {
+			$setWorked = setEmoji($options);
 		}
 		elseif ($command == "twitch") {
 			$setWorked = setTwitch($options);
@@ -48,7 +57,7 @@ function setConfig($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
 		$options[1] = join(" ", array_slice($options, 1));
-		$xml->config->{strtolower($options[0])} = $options[1];
+		$xml->config->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
 	}
 	else {
 		unset($xml->config->{strtolower($options[0])});
@@ -65,7 +74,7 @@ function setInfo($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
 		$options[1] = join(" ", array_slice($options, 1));
-		$xml->info->{strtolower($options[0])} = $options[1];
+		$xml->info->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
 	}
 	else {
 		unset($xml->info->{strtolower($options[0])});
@@ -82,7 +91,7 @@ function setImg($options) {
 	global $xml, $xmlFile;
 	if (count($options) > 1) {
 		$options[1] = join(" ", array_slice($options, 1));
-		$xml->img->{strtolower($options[0])} = $options[1];
+		$xml->img->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
 	}
 	else {
 		unset($xml->img->{strtolower($options[0])});
@@ -95,6 +104,57 @@ function setImg($options) {
 	}
 }
 
+function setYoutube($options) {
+	global $xml, $xmlFile;
+	if (count($options) > 1) {
+		$options[1] = join(" ", array_slice($options, 1));
+		$xml->youtube->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
+	}
+	else {
+		unset($xml->youtube->{strtolower($options[0])});
+	};
+	if ($xml->asXml($xmlFile)) {
+		sendMsg("Youtube info update successful");
+	}
+	else {
+		sendMsg("Youtube info update unsuccessful");
+	}
+}
+
+function setCustom($options) {
+	global $xml, $xmlFile;
+	if (count($options) > 1) {
+		$options[1] = join(" ", array_slice($options, 1));
+		$xml->custom->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
+	}
+	else {
+		unset($xml->custom->{strtolower($options[0])});
+	};
+	if ($xml->asXml($xmlFile)) {
+		sendMsg("Custom info update successful");
+	}
+	else {
+		sendMsg("Custom info update unsuccessful");
+	}
+}
+
+function setEmoji($options) {
+	global $xml, $xmlFile;
+	if (count($options) > 1) {
+		$options[1] = join(" ", array_slice($options, 1));
+		$xml->emoji->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
+	}
+	else {
+		unset($xml->emoji->{strtolower($options[0])});
+	};
+	if ($xml->asXml($xmlFile)) {
+		sendMsg("Emoji update successful");
+	}
+	else {
+		sendMsg("Emoji update unsuccessful");
+	}
+}
+
 function setTwitch($options) {
 	global $xml, $xmlFile;
 	$team = "";
@@ -104,7 +164,7 @@ function setTwitch($options) {
 	if (!$team) {
 		return;
 	} 
-	$xml->twitch->{$team} = $options[1];
+	$xml->twitch->{$team} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
 	if ($xml->asXml($xmlFile)) {
 		sendMsg("Twitch update successful");
 	}

@@ -100,7 +100,16 @@ These commands get info from config.xml
 * img [key]: Returns an image based on the key 
   * key: a key that exists in the img portion of config.xml
   * if no key is specified, it returns a list of images
-* key: shorthand for "info key" and "img key"
+* youtube [key]: Returns youtube info based on the key 
+  * key: a key that exists in the youtube portion of config.xml
+  * if no key is specified, it returns all youtube info
+* custom [key]: Returns custom info based on the key 
+  * key: a key that exists in the custoim portion of config.xml
+  * if no key is specified, it returns all custom info
+* emoji [key]: Returns an emoji based on the key 
+  * key: a key that exists in the emoji portion of config.xml
+  * if no key is specified, it returns all emoji keys
+* key: shorthand for "info key", "img key", "custom key", and "emoji key" 
   * searches "info" first, then "img" if not found
 
 #### Admin
@@ -109,15 +118,22 @@ These commands get info from config.xml
   * key: a key that exists in the config portion of config.xml
   * if no key is specified, it returns all config info. 
 * set key1 key2 [value]: sets the value of an attribute
-  * key1: 4 options:
+  * key1: options:
     * config
 	* info
 	* img
+	* custom
+	* emoji
+	* youtube
 	* twitch
   * key2: an  existing or new attribute in the key1 portion of config.xml
   * value: case-sensitive. the value. if not specified, key2 is delted from key1
 
---
+---
+
+My next task is to refactor some of the code. 
+
+---
 
 ## LICENSE
 

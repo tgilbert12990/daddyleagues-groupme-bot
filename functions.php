@@ -1,5 +1,8 @@
 <?php
 
+
+defined("ENT_XML1") or define("ENT_XML1", 16);
+
 libxml_use_internal_errors(true);
 
 $teamNamesToAbbr = array(
@@ -466,6 +469,56 @@ function sendImg($opt = "all") {
 	}
 }
 
+function sendYoutube($opt = "all") {
+	global $xmlArr;
+	$importantInfo = $xmlArr["youtube"];
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		foreach($importantInfo as $k => $v) {
+			$msg .= $k . ": " . $v . " \n";
+		}
+		$msg = substr($msg, 0, -1);
+	}
+	elseif (key_exists($opt, $importantInfo)) {
+		$msg = $opt . ": " . $importantInfo[$opt];
+	}
+	sendMsg($msg);
+}
+
+function sendCustom($opt = "all") {
+	global $xmlArr;
+	$importantInfo = $xmlArr["custom"];
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		foreach($importantInfo as $k => $v) {
+			$msg .= $k . ": " . $v . " \n";
+		}
+		$msg = substr($msg, 0, -1);
+	}
+	elseif (key_exists($opt, $importantInfo)) {
+		$msg = $opt . ": " . $importantInfo[$opt];
+	}
+	sendMsg($msg);
+}
+
+function sendEmoji($opt = "all") {
+	global $xmlArr;
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		foreach($xmlArr["emoji"] as $k => $v) {
+			$msg .= "$k, ";
+		}
+		$msg = substr($msg, 0, -2);
+		sendMsg($msg);
+	}
+	elseif (key_exists($opt, $xmlArr["emoji"])) {
+		sendImgMsg($xmlArr["emoji"][$opt]);
+	}
+}
+
 function sendHelp() {
 	global $league;
 	global $cmd_prefix;
@@ -525,16 +578,13 @@ function getTeam($team) {
 
 function xml2array($xml) {
 	$arr = array();
-	foreach ($xml as $element)
-	{
+	foreach ($xml as $element) {
 		$tag = $element->getName();
 		$e = get_object_vars($element);
-		if (!empty($e))
-		{
+		if (!empty($e)) {
 			$arr[$tag] = $element instanceof SimpleXMLElement ? xml2array($element) : $e;
 		}
-		else
-		{
+		else {
 			$arr[$tag] = trim($element);
 		}
 	}
