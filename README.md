@@ -2,6 +2,8 @@
 
 [JasonLBogle.com](http://jasonlbogle.com)
 
+[Donate on PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LZV3AVMN5EK4Q)
+
 This is an unofficial Groupme bot that you can use 
 in conjuction with a Madden league on Daddyleagues. 
 
@@ -30,6 +32,8 @@ as the bots.
     * cmdprefix: what will preceed each command
     * pslimit: the maximum numberr of players a player 
     search will return
+    * charlimit: If a message by the bot exceeds this, the bot will send a link
+    to get.php that will generate the message when visited
   * info attributes
     * league: the name of the league
 	* commish: the league's commisioner
@@ -37,11 +41,17 @@ as the bots.
 	rules there)
 	* owners: a link to the owner list (or you could just put 
 	the owner list there)
-	* adv: the next scheduled advance
+	* advance: the next scheduled advance
 	* draft: the next scheduled draft
 	* botdev: I ask that you leave this setting as-is
+  * custom: this is for info you don't want in the info section for when someone
+  asks for all info
+  * rings: the list of people with Super Bowl victories and how many they have
+  * alias: all aliases - an alias is a command that executes another command
   * twitch attributes
     * put the twitch user name for each team's owner 
+  * magic8ball: all the 8ball answers
+  * emoji: all the ermojis
 2. Upload the files to a server.
 3. Create a bot for the main groupme at https://dev.groupme.com/bots
   * select the desired group 
@@ -102,15 +112,28 @@ These commands get info from config.xml
   * if no key is specified, it returns a list of images
 * youtube [key]: Returns youtube info based on the key 
   * key: a key that exists in the youtube portion of config.xml
-  * if no key is specified, it returns all youtube info
+  * if no key is specified, it returns all youtube info\
+* rings [key]: Returns ring (Super Bowl wins) count based on the key
+  * key: the player's game handle (psn name or xbox live name or just whatever 
+  you call them)
+  * if no key is specified, it returns a list of the people with rings in order
+  of most to least
 * custom [key]: Returns custom info based on the key 
   * key: a key that exists in the custoim portion of config.xml
   * if no key is specified, it returns all custom info
+* 8ball [question]: returns one of the 20 magic 8-ball replies
 * emoji [key]: Returns an emoji based on the key 
   * key: a key that exists in the emoji portion of config.xml
   * if no key is specified, it returns all emoji keys
-* key: shorthand for "info key", "img key", "custom key", and "emoji key" 
-  * searches "info" first, then "img" if not found
+* key: shorthand for "custom key", "info key", "img key", "youtube key", and 
+"emoji key" 
+  * searches in the following order:
+    * custom
+    * info
+    * img
+    * youtube
+    * emoji
+* help: returns a help message
 
 #### Admin
 
@@ -122,12 +145,21 @@ These commands get info from config.xml
     * config
 	* info
 	* img
+	* rings
 	* custom
 	* emoji
 	* youtube
 	* twitch
+	* alias**
   * key2: an  existing or new attribute in the key1 portion of config.xml
   * value: case-sensitive. the value. if not specified, key2 is delted from key1
+  
+\*\*alias: you have the ability to add an alias to any command. For example, 
+"advance" is stored in the "info" portion of the xml. To display it, you can 
+send "?info advance" or just "?advance" normall (and assuming "?" is the prefix.
+But maybe you want to be able to just send "?adv" or "?sim" instead. You can set 
+it up that way! In the chat with the admin bot, just send "?set alias adv info 
+advance" or "?set alias adv advance", either way will work. 
 
 ---
 

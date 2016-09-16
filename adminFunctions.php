@@ -35,6 +35,9 @@ function setCommand($options) {
 		elseif ($command == "info") {
 			$setWorked = setInfo($options);
 		}
+		elseif ($command == "rings") {
+			$setWorked = setRings($options);
+		}
 		elseif ($command == "youtube") {
 			$setWorked = setYoutube($options);
 		}
@@ -43,6 +46,9 @@ function setCommand($options) {
 		}
 		elseif ($command == "img") {
 			$setWorked = setImg($options);
+		}
+		elseif ($command == "alias") {
+			$setWorked = setAlias($options);
 		}
 		elseif ($command == "emoji") {
 			$setWorked = setEmoji($options);
@@ -84,6 +90,23 @@ function setInfo($options) {
 	}
 	else {
 		sendMsg("Info update unsuccessful");
+	}
+}
+
+function setRings($options) {
+	global $xml, $xmlFile;
+	if (count($options) > 1) {
+		$options[1] = join(" ", array_slice($options, 1));
+		$xml->rings->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
+	}
+	else {
+		unset($xml->rings->{strtolower($options[0])});
+	};
+	if ($xml->asXml($xmlFile)) {
+		sendMsg("Ring update successful");
+	}
+	else {
+		sendMsg("Ring update unsuccessful");
 	}
 }
 
@@ -135,6 +158,23 @@ function setCustom($options) {
 	}
 	else {
 		sendMsg("Custom info update unsuccessful");
+	}
+}
+
+function setAlias($options) {
+	global $xml, $xmlFile;
+	if (count($options) > 1) {
+		$options[1] = join(" ", array_slice($options, 1));
+		$xml->alias->{strtolower($options[0])} = htmlspecialchars($options[1], ENT_XML1, 'UTF-8');
+	}
+	else {
+		unset($xml->alias->{strtolower($options[0])});
+	};
+	if ($xml->asXml($xmlFile)) {
+		sendMsg("Alias update successful");
+	}
+	else {
+		sendMsg("Alias info update unsuccessful");
 	}
 }
 

@@ -1,5 +1,6 @@
 <?php
 
+include("php-redefine-function.php");
 
 defined("ENT_XML1") or define("ENT_XML1", 16);
 
@@ -13,7 +14,7 @@ $teamNamesToAbbr = array(
 	"cowboys" => "dal", "giants" => "nyg", "eagles" => "phi", "redskins" => "was",
 	"bears" => "chi", "lions" => "det", "packers" => "gb", "vikings" => "min",
 	"falcons" => "atl", "panthers" => "car", "saints" => "no", "buccaneers" => "tb",
-	"cardinals" => "ari", "seahawks" => "sea", "49ers" => "sf", "rams" => "stl"
+	"cardinals" => "ari", "seahawks" => "sea", "49ers" => "sf", "rams" => "la", "stl" => "la"
 );
 
 $positions = array(
@@ -25,39 +26,24 @@ $positions = array(
 );
 
 // Send a message from the bot to the group it's registered in.
-function sendMsg( $msg ){
+defun("sendMsg", 
+function($msg){
 	global $bot_token;
+	global $char_limit;
 	$url = "https://api.groupme.com/v3/bots/post";
 	
-	if (strlen($msg) > 1000) {
-		//echo "<br><br>LOOOOOOOOOOOOOOONNNNNNNNNNGGGGGGGG<br><br>";
-		$done = FALSE;
-		$startPos = 0;
-		$lastNL = 0;
-		$len = 1000;
-		$strLen = strlen($msg);
-		while ($startPos < $strLen) {
-			$str = substr($msg, $startPos, 1000);
-			if (strlen($str) < 1000) {
-				$lastNL = strlen($str) + 1;
-			}
-			else {
-				$lastNL = strrpos($str, "\n");	
-			}
-			$startPos += $lastNL + 1;
-			$str = substr($str, 0, $lastNL);
-			$body = sprintf('{"text":%s,"bot_id":"%s"}', json_encode($str), $bot_token);
-			$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
-			//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
-		}
-		
+	if (strlen($msg) > $char_limit) {
+		global $iMsgText;
+		$base = $_SERVER['SCRIPT_URI'];
+		$scriptname = explode("/", $base);
+		$scriptname = $scriptname[count($scriptname)-1];
+		$base = str_replace($scriptname, "", $base);
+		$msg = $base . "get.php?iMsgText=" . urlencode($iMsgText);
 	}
-	else {
-		$body = sprintf('{"text":%s,"bot_id":"%s"}', json_encode($msg), $bot_token);
-		$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
-		echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
-	}
-}
+	$body = sprintf('{"text":%s,"bot_id":"%s"}', json_encode($msg), $bot_token);
+	$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
+	//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
+});
 
 // Send an image from the bot to the group it's registered in.
 function sendImgMsg( $img ){
@@ -92,7 +78,7 @@ function getTeamWeekScore($team, $week) {
 	$found = FALSE;
 	$retStr = "";
 	foreach ($scores as $s) {
-		echo "<p>".stristr($s->nodeValue, "WK " . $week)."</p>";
+		//echo "<p>".stristr($s->nodeValue, "WK " . $week)."</p>";
 		if (stristr($s->nodeValue, "WK " . $week)) {
 			$found = TRUE;
 			$weekScore = preg_replace($pattern, $replacement, $s->nodeValue);
@@ -196,12 +182,12 @@ function sendLeagueScoresForWeek($week) {
 				$i++;
 				$score = trim(preg_replace("/\s+/", " ", $score));
 				$splitScore = explode(" ", $score);
-				print_r($splitScore);
+				//print_r($splitScore);
 				$homeTeam = $splitScore[0];
 				$awayTeam = $splitScore[5];
 				$seen[$teamNamesToAbbr[strtolower($homeTeam)]] = TRUE;
 				$seen[$teamNamesToAbbr[strtolower($awayTeam)]] = TRUE;
-				print_r($seen);
+				//print_r($seen);
 				$retStr .= "\n" . $score;
 				print("<br>$i of $max<br>");
 				if ($max && $i >= $max) {
@@ -277,13 +263,13 @@ function sendPlayerSearch($params) {
 	$classname = "tbdy1";
 	$query = "//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]";
 	$players = $xpath->query($query);
-	var_dump($players);
+	//var_dump($players);
 	$search_limit = min(array($search_limit, $players->length));
 	$entries = array();
 	$eovrs = array();
 	foreach ($players as $p) {
-		echo "\n$i\n";
-		var_dump($p);
+		//echo "\n$i\n";
+		//var_dump($p);
 		$name = trim($p->getElementsByTagName("a")->item(0)->nodeValue);
 		$link = trim($p->getElementsByTagName("a")->item(0)->getAttribute("href"));
 		$tds = $p->getElementsByTagName("td");
@@ -295,12 +281,12 @@ function sendPlayerSearch($params) {
 		$weight = trim($tds->item(6)->nodeValue);
 		$ovr = trim($tds->item(7)->nodeValue);
 		$myRetStr = "\n$pos $name $team Age:$age Dev:$dev OVR:$ovr $link";
-		echo "<br>$myRetStr<br>";
+		//echo "<br>$myRetStr<br>";
 		if (count($entries) > 0) {
 			$inserted = FALSE;
 			for ($i = 0; i < count($entries) && !$inserted; $i++) {
 				if (intval($ovr) > $eovrs[$i]) {
-					echo "<p>intval($ovr) intval($eovrs[$i])</p>";
+					//echo "<p>intval($ovr) intval($eovrs[$i])</p>";
 					array_splice($entries, $i, 0, $myRetStr);
 					array_splice($eovrs, $i, 0, intval($ovr));
 					$inserted = TRUE;
@@ -453,6 +439,59 @@ function sendInfo($opt = "all") {
 	sendMsg($msg);
 }
 
+function sendRings($opt = "all") {
+	global $xmlArr;
+	$importantInfo = $xmlArr["rings"];
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		$names = array();
+		$rings = array();
+		if ($importantInfo) {
+			foreach($importantInfo as $k => $v) {
+				//$msg .= $k . ": " . $v . " \n";
+				if (count($names) == 0) {
+					$names[0] = $k;
+					$rings[0] = $v;
+				}
+				else { // *
+					for ($i = 0, $placed = false; $i < count($names) && !$placed; $i++) {
+						if ($v > $rings[$i]) {
+							array_splice($names, $i, 0, $k);
+							array_splice($rings, $i, 0, $v);
+							$placed = true;
+						}
+					}// */
+					if (!$placed) {
+						array_push($names, $k);
+						array_push($rings, $v);
+					}
+				}
+			}
+			for ($i = 0; $i < count($names); $i++) {
+				$msg .= $names[$i] . ": " . $rings[$i] . "\n";
+			} 
+			$msg = substr($msg, 0, -1);
+		}
+		else {
+			$msg = "There are no rings";
+		}
+	}
+	elseif (key_exists($opt, $importantInfo)) {
+		$msg = $opt . ": " . $importantInfo[$opt];
+		if (intval($importantInfo[$opt] > 1)) {
+			$msg .= " rings";
+		}
+		else {
+			$msg .= " ring";
+		}
+	}
+	else {
+		$msg = "$opt has no rings";
+	}
+	sendMsg($msg);
+}
+
 function sendImg($opt = "all") {
 	global $xmlArr;
 	$opt = strtolower($opt);
@@ -503,6 +542,13 @@ function sendCustom($opt = "all") {
 	sendMsg($msg);
 }
 
+function send8Ball() {
+	global $xml;
+	$index = rand(0, 19);
+	$msg = "Magic 8-Ball: " . $xml->magic8ball->reply[$index];
+	sendMsg($msg);
+}
+
 function sendEmoji($opt = "all") {
 	global $xmlArr;
 	$opt = strtolower($opt);
@@ -515,8 +561,32 @@ function sendEmoji($opt = "all") {
 		sendMsg($msg);
 	}
 	elseif (key_exists($opt, $xmlArr["emoji"])) {
-		sendImgMsg($xmlArr["emoji"][$opt]);
+		sendImgMsg(htmlspecialchars_decode($xmlArr["emoji"][$opt]), ENT_XML1, 'UTF-8');
 	}
+}
+
+function doAlias($cmd, $args) {
+	global $xmlArr;
+	global $isAdmin;
+	global $cmd_prefix;
+	$cmd = $xmlArr["alias"][$cmd];
+	array_splice($args, 0, 0, $cmd);
+	$cmd = $cmd_prefix . implode(" ", $args);
+	$base = $_SERVER['SCRIPT_URI'];
+	$scriptname = explode("/", $base);
+	$scriptname = $scriptname[count($scriptname)-1];
+	$base = str_replace($scriptname, "", $base);
+	$url = "";
+	if ($isAdmin) {
+		$url = $base . "adminBot.php?iMsgText=" . urlencode($cmd);
+	}
+	else {
+		$url = $base . "mainBot.php?iMsgText=" . urlencode($cmd);
+	}
+	//echo "<p>$url</p>\n";
+	$doc = new DOMDocument();
+	$doc->loadHTMLFile($url);
+	//var_dump($doc);
 }
 
 function sendHelp() {
@@ -527,10 +597,15 @@ function sendHelp() {
 League: {1}
 Commands: 
 {0}twitch team [popout] : Gets a link to the twitch for the specified team
-{0}info [key] : Gets info based on specified key (e.g. rules, adv, owners, draft)
-{0}img [key] : Gets info based on specified key (e.g. scalp, ring)
-{0}key : Shorthand for {0}info key and {0}img key (e.g. {0}rules, {0}scalp)
-{0}helpme : This is what was just called", $cmd_prefix, $league);
+{0}custom [key]         : Gets custom info based on specified key (e.g. hello)
+{0}info [key]           : Gets info based on specified key (e.g. rules, adv, owners, draft)
+{0}rings [key]          : Gets number of rings based on key (PSN of player)
+{0}img [key]            : Gets info based on specified key (e.g. scalp, ring)
+{0}youtube [key]        : Gets youtube info based on specified key (e.g. signman)
+{0}emoji [key]          : Gets emoji based on specified key (e.g. turkey, santa)
+{0}8ball				: Returns a random answer 
+{0}key                  : Shorthand for {0}custom key, {0}info key, {0}img key, {0}youtube key, and {0}emoji key (e.g. {0}rules, {0}scalp)
+{0}help                 : This is what was just called", $cmd_prefix, $league);
 	if ($isAdmin) {
 		$helpStr .= format("
 ADMIN COMMANDS

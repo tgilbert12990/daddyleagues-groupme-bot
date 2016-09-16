@@ -5,13 +5,14 @@
 		<league>TSL</league>
 		<cmdprefix>?</cmdprefix>
 		<pslimit>5</pslimit>
+		<charlimit>1000</charlimit>
 	</config>
 	<info>
 		<league>The Test League (TTL)</league>
-		<commish>TheWitt</commish>
-		<rules>https://docs.google.com/document/d/1DHAiI_80G_LQ_MPx-SIMF27gK4MH-wBEPP0OAKCU9oQ/edit?usp=sharing</rules>
-		<owners>https://docs.google.com/document/d/1PAxMPuLNopNNYbFm3Khhngn8nw5eRTbDNb0Ls7TG2FY/edit?usp=sharing</owners>
-		<adv>9/3, 5pm Central</adv>
+		<commish>put commish name here</commish>
+		<rules>put rules link here</rules>
+		<owners>put owners link here</owners>
+		<advance>9/3, 5pm Central</advance>
 		<draft>9/3, 5pm Central</draft>
 		<botdev>https://github.com/kicker10BOG/daddyleagues-groupme-bot</botdev>
 	</info>
@@ -25,6 +26,14 @@
 	<custom>
 		<hello>hello world!</hello>
 	</custom>
+	<rings>
+	</rings>
+	<alias>
+		<contact>owners</contact>
+		<adv>advance</adv>
+		<sim>advance</sim>
+		<nostradamus>8ball</nostradamus>
+	</alias>
 	<twitch>
 		<buf>sometwitchname</buf>
 		<mia/>
@@ -39,7 +48,7 @@
 		<hou/>
 		<ind/>
 		<jac/>
-		<ten>signmantsl</ten>
+		<ten/>
 		
 		<den/>
 		<kc/>
@@ -64,8 +73,30 @@
 		<ari/>
 		<sea/>
 		<sf/>
-		<stl/>
+		<la/>
 	</twitch>
+	<magic8ball>
+		<reply>It is certain</reply>
+		<reply>It is decidedly so</reply>
+		<reply>Without a doubt</reply>
+		<reply>Yes, definitely</reply>
+		<reply>You may rely on it</reply>
+		<reply>As I see it, yes</reply>
+		<reply>Most likely</reply>
+		<reply>Outlook good</reply>
+		<reply>Yes</reply>
+		<reply>Signs point to yes</reply>
+		<reply>Reply hazy. Try again</reply>
+		<reply>Ask again later</reply>
+		<reply>Better not tell you</reply>
+		<reply>Cannot predict now</reply>
+		<reply>Concentrate and ask again</reply>
+		<reply>Don't count on it</reply>
+		<reply>My reply is no</reply>
+		<reply>My sources say no</reply>
+		<reply>Outlook not so good</reply>
+		<reply>Very doubtful</reply>
+	</magic8ball>
 	<emoji>
 		<wary>https://external-dft4-1.xx.fbcdn.net/safe_image.php?d=AQBrs2kQWoDr4JeY&amp;url=http%3A%2F%2Fprofile.ak.fbcdn.net%2Fhprofile-ak-snc4%2F373572_309448622428615_1815569583_q.jpg</wary>
 		<shifty>https://external-dft4-1.xx.fbcdn.net/safe_image.php?d=AQBAeZJ1rZ9SR6W5&amp;url=http%3A%2F%2Fprofile.ak.fbcdn.net%2Fhprofile-ak-snc4%2F50470_409615409069016_654384652_q.jpg</shifty>
@@ -140,5 +171,8 @@
 		<whistle>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/whistle_anim.gif</whistle>
 		<turkey>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/turkey_40_anim_gif.gif</turkey>
 		<santa>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/santa_40_anim_gif.gif</santa>
+		<penguin>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/penguin_40_anim_gif.gif</penguin>
+		<key>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/key_40_anim_gif.gif</key>
+		<ninja>https://az705183.vo.msecnd.net/onlinesupportmedia/onlinesupport/media/skype/screenshots/fa12330/emoticons/ninja_80_anim_gif.gif?width=40&amp;amp;height=40</ninja>
 	</emoji>
 </all>

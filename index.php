@@ -17,12 +17,22 @@ $cmd_prefix = $xmlArr["config"]["cmdprefix"];
 $base_url = $xmlArr["config"]["baseurl"];
 $league = $xmlArr["config"]["league"];
 $search_limit = $xmlArr["config"]["pslimit"];
+$char_limit = $xmlArr["config"]["charlimit"];
 
-// get the message as json
-$cont = file_get_contents("php://input");
-$json = json_decode($cont);
-// lowercase makes it easier to recognize commands
-$msgText = strtolower( $json->text );
+$msgText = "";
+$iMsgText = "";
+if (isset($_REQUEST['iMsgText'])) {
+	$msgText = strtolower($_REQUEST['iMsgText']);
+	$iMsgText = $_REQUEST['iMsgText'];
+}
+else {
+	// get the message as json
+	$cont = file_get_contents("php://input");
+	$json = json_decode($cont);
+	// lowercase makes it easier to recognize commands
+	$msgText = strtolower( $json->text );
+	$iMsgText = $json->text;
+}
 // break into array
 $command = preg_split('/\s+/', $msgText);
 // check for command prefix
@@ -64,6 +74,13 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			sendInfo($command[1]);
 			break;
 			
+		case "rings": // get info
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			sendRings($command[1]);
+			break;
+			
 		case "img": // get img
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
@@ -71,28 +88,32 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			sendImg($command[1]);
 			break;
 			
-		case "youtube": // get img
+		case "youtube": // get youtube
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
 			}
 			sendYoutube($command[1]);
 			break;
 			
-		case "custom": // get img
+		case "custom": // get custom
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
 			}
 			sendCustom($command[1]);
 			break;
 			
-		case "emoji": // get img
+		case "emoji": // get emoji
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
 			}
 			sendEmoji($command[1]);
 			break;
+			
+		case "8ball": // get 8ball
+			send8Ball();
+			break;
 
-		case "helpme": // get help
+		case "help": // get help
 			sendHelp();
 			break;
 
@@ -115,8 +136,14 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			elseif ($isAdmin) { // is admin chat?
 				include("adminCommands.php");
 			}
+			elseif(array_key_exists($cmd, $xmlArr["alias"])) {
+				if (!array_key_exists(1, $command)) {
+					$command[1] = "";
+				}
+				doAlias($cmd, array_slice($command, 1));
+			}
 			else { // main chat
-				sendMsg(sprintf("Invalid command. send \"%shelpme\" for help", $cmd_prefix));
+				sendMsg(sprintf("Invalid command. send \"%shelp\" for help", $cmd_prefix));
 			}
 			break;
 	}
@@ -129,7 +156,9 @@ else if (!$msgText && !$json) { // testing zone
 	//sendMsg("Rule Book: $rules");
 	//sendTwitchLink(array("nyj", "P"));
 	//setCommand(array("info", "test"));
-	//sendImg($xmlArr["img"]["scalp"]);
-	setCustom(array("testing", "this is a test"));
+	//sendImg($xmlArr["img"]["sscalp"]);
+	//setCustom(array("testing", "this is a test"));
+	//sendRings("all");
+	//doAlias("contact", array());
 }
 ?>
