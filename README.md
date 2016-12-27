@@ -72,10 +72,6 @@ Notes:
 
 ##### Daddyleagues-Based Commands
 
-NOTE: Daddyleagues does not work for Madden 17 leagues yet, 
-so these commands are useless in Madden 17 leagues right now.
-This is why they are currently not included in the helpme message. 
-
 * tl: Gets a link to the team on Daddyleagues
 * ps [options]: performs a player search baseds on options 
   * options: all are optional
@@ -83,12 +79,14 @@ This is why they are currently not included in the helpme message.
 	* position: the position (qb, hb, wr, ...)
 	* team: can be abbreviation or team name (ten or titans)
 	* rookie: search only rookies (r or rookie)
+	* injured: search only injured players (i or inj or injured)
 	* not specifying any options will return the top players in the league
 * tws team week: Returns the score for the specified tean and week
   * team: can be abbreviation or team name (ten or titans)
   * week: 1-17, wc, dr, cc, sb
-* sync week: Gets the scores/schedule for a specified week
-*NOTE* This command almost never finishes before it times out. 
+* sync week: Gets the unplayed games for a specified week
+  * week: 1-17, wc, dr, cc, sb
+* unplayed week: Gets the scores/schedule for a specified week
   * week: 1-17, wc, dr, cc, sb
 * week: Gets the current week according to daddyleagues
 * helpme: Returns a help message
@@ -122,6 +120,9 @@ These commands get info from config.xml
   * key: a key that exists in the custoim portion of config.xml
   * if no key is specified, it returns all custom info
 * 8ball [question]: returns one of the 20 magic 8-ball replies
+* simscores [key]: Returns a simscore based on the key
+  * key: a key that exists in the simscore portion of config.xml
+  * if no key is specified, it returns all simscore keys sorted high to low
 * emoji [key]: Returns an emoji based on the key 
   * key: a key that exists in the emoji portion of config.xml
   * if no key is specified, it returns all emoji keys

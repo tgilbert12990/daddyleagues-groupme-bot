@@ -9,7 +9,7 @@ libxml_use_internal_errors(true);
 $teamNamesToAbbr = array(
 	"bills" => "buf", "dolphins" => "mia", "patriots" => "ne", "jets" => "nyj",
 	"ravens" => "bal", "bengals" => "cin", "browns" => "cle", "steelers" => "pit",
-	"texans" => "hou", "colts" => "ind", "jaguars" => "jac", "titans" => "ten",
+	"texans" => "hou", "colts" => "ind", "jaguars" => "jax", "jac" => "jax", "titans" => "ten",
 	"broncos" => "den", "chiefs" => "kc", "raiders" => "oak", "chargers" => "sd", 
 	"cowboys" => "dal", "giants" => "nyg", "eagles" => "phi", "redskins" => "was",
 	"bears" => "chi", "lions" => "det", "packers" => "gb", "vikings" => "min",
@@ -51,7 +51,7 @@ function sendImgMsg( $img ){
 	$url = "https://api.groupme.com/v3/bots/post";
 	$body = sprintf('{"text":"","attachments":[{"type":"image","url":%s}],"bot_id":"%s"}', json_encode($img), $bot_token);
 	$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
-	//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
+	echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
 }
 
 function getTeamWeekScore($team, $week) {
@@ -73,7 +73,7 @@ function getTeamWeekScore($team, $week) {
 	$scores = $xpath->query($query, $scoresDiv);
 	$pattern = '/\sWK\s'. $week .'\s/i';
 	//$pattern = '/\sWK\s\d+/i';
-	echo "<p>$pattern</p>";
+	//echo "<p>$pattern</p>";
 	$replacement = '';
 	$found = FALSE;
 	$retStr = "";
@@ -149,7 +149,7 @@ function getWeek($week) {
 	return $week;
 }
 
-function sendLeagueScoresForWeek($week) {
+function sendLeagueScoresForWeek($week, $unplayed = FALSE) {
 	global $teamNamesToAbbr;
 	$max = 0;
 	$retStr = "";
@@ -165,17 +165,27 @@ function sendLeagueScoresForWeek($week) {
 	}
 	if ($max) {
 		$retStr = sprintf("Schedule for %s week:", strtoupper($week));
-		sendMsg(sprintf("Getting schedule for %s week. Please be patient.", strtoupper($week)));
+		if ($unplayed) {
+			sendMsg(sprintf("Getting unplayed schedule for %s week. Please be patient.", strtoupper($week)));
+		}
+		else {
+			sendMsg(sprintf("Getting schedule for %s week. Please be patient.", strtoupper($week)));
+		}
 	}
 	else {
 		$retStr = sprintf("Schedule for week %s:", $week);
-		sendMsg(sprintf("Getting schedule for week %s. Please be patient.", strtoupper($week)));
+		if ($unplayed) {
+			sendMsg(sprintf("Getting unplayed schedule for week %s. Please be patient.", strtoupper($week)));
+		}
+		else {
+			sendMsg(sprintf("Getting schedule for week %s. Please be patient.", strtoupper($week)));
+		}
 	} 
 	$origRetStr = $retStr;
 	$seen = array();
 	$i = 0;
 	foreach ($teamNamesToAbbr as $key => $team) {
-		echo "<br>$key<br>";
+		//echo "<br>$key<br>";
 		if (!key_exists($team, $seen)) {
 			$score = getTeamWeekScore($team, $week);
 			if ($score) {
@@ -188,18 +198,27 @@ function sendLeagueScoresForWeek($week) {
 				$seen[$teamNamesToAbbr[strtolower($homeTeam)]] = TRUE;
 				$seen[$teamNamesToAbbr[strtolower($awayTeam)]] = TRUE;
 				//print_r($seen);
-				$retStr .= "\n" . $score;
-				print("<br>$i of $max<br>");
+				//$retStr .= "\n" . $score;
+				if ($unplayed) {
+					if ($splitScore[2] == 0 && array_key_exists(4, $splitScore) 
+						&& $splitScore[4] == 0) {
+						sendMsg($score);
+					}
+				}
+				else {
+					sendMsg($score);
+				}
+				//print("<br>$i of $max<br>");
 				if ($max && $i >= $max) {
 					return;
 				}
 			}
 		}
 	}
-	if ($retStr == $origRetStr) {
-		$retStr .= "\nNo scores were found";
-	}
-	sendMsg($retStr);
+	//if ($retStr == $origRetStr) {
+	//	$retStr .= "\nNo scores were found";
+	//}
+	//sendMsg($retStr);
 }
 
 function sendTeamWeekScore($team, $week) {
@@ -220,6 +239,7 @@ function sendPlayerSearch($params) {
 	$team = "";
 	$pos = "";
 	$rookie = 0;
+	$injury = 0;
 	foreach ($params as $p) {
 		if (key_exists(strtolower($p), $teamNamesToAbbr)) {
 			$team = $teamNamesToAbbr[strtolower($p)];
@@ -230,11 +250,14 @@ function sendPlayerSearch($params) {
 		elseif (in_array(strtolower($p), $positions)) {
 			$pos = strtoupper($p);
 		}
-		elseif (strtolower($p) == "r") {
+		elseif (strtolower($p) == "r" || strtolower($p) == "rook" || strtolower($p) == "rookie") {
 			$rookie = 1;
 		}
+		elseif (strtolower($p) == "i" || strtolower($p) == "inj" || strtolower($p) == "injured") {
+			$injury = 1;
+		}
 		elseif ($name) {
-			$name .= " $p";
+			$name .= "%20$p";
 		}
 		else {
 			$name = $p;
@@ -253,11 +276,14 @@ function sendPlayerSearch($params) {
 	if($rookie) {
 		$searchStr .= "rookie=1&";
 	}
+	if($injury) {
+		$searchStr .= "injured=1&";
+	}
 	$searchStr .= "sorty_by=OVR";
 	$origRetStr = $searchStr .= "\nPlayers found:";
 	$retStr = $origRetStr;
 	$doc = new DOMDocument();
-	$doc->loadHTMLFile($searchStr);
+	$doc->loadHTMLFile(rawurldecode($searchStr));
 	$xpath = new DOMXPath($doc);
 	$scoresDiv = $doc->getElementById("scores");
 	$classname = "tbdy1";
@@ -280,7 +306,7 @@ function sendPlayerSearch($params) {
 		$height = trim($tds->item(5)->nodeValue);
 		$weight = trim($tds->item(6)->nodeValue);
 		$ovr = trim($tds->item(7)->nodeValue);
-		$myRetStr = "\n$pos $name $team Age:$age Dev:$dev OVR:$ovr $link";
+		$myRetStr = "\n$pos $name $team Age:$age Dev:$dev OVR:$ovr $link/attributes";
 		//echo "<br>$myRetStr<br>";
 		if (count($entries) > 0) {
 			$inserted = FALSE;
@@ -492,6 +518,53 @@ function sendRings($opt = "all") {
 	sendMsg($msg);
 }
 
+function sendSimScores($opt = "all") {
+	global $xmlArr;
+	$importantInfo = $xmlArr["simscores"];
+	$opt = strtolower($opt);
+	$msg = "";
+	if ($opt == "all") {
+		$names = array();
+		$rings = array();
+		if ($importantInfo) {
+			foreach($importantInfo as $k => $v) {
+				//$msg .= $k . ": " . $v . " \n";
+				if (count($names) == 0) {
+					$names[0] = $k;
+					$simscores[0] = $v;
+				}
+				else { // *
+					for ($i = 0, $placed = false; $i < count($names) && !$placed; $i++) {
+						if ($v > $simscores[$i]) {
+							array_splice($names, $i, 0, $k);
+							array_splice($simscores, $i, 0, $v);
+							$placed = true;
+						}
+					}// */
+					if (!$placed) {
+						array_push($names, $k);
+						array_push($simscores, $v);
+					}
+				}
+			}
+			for ($i = 0; $i < count($names); $i++) {
+				$msg .= $names[$i] . ": " . $simscores[$i] . "\n";
+			} 
+			$msg = substr($msg, 0, -1);
+		}
+		else {
+			$msg = "There are no simscores";
+		}
+	}
+	elseif (key_exists($opt, $importantInfo)) {
+		$msg = $opt . "'s simscore: " . $importantInfo[$opt];
+	}
+	else {
+		$msg = "$opt has no simscore";
+	}
+	sendMsg($msg);
+}
+
 function sendImg($opt = "all") {
 	global $xmlArr;
 	$opt = strtolower($opt);
@@ -544,7 +617,8 @@ function sendCustom($opt = "all") {
 
 function send8Ball() {
 	global $xml;
-	$index = rand(0, 19);
+	$count = count($xml->magic8ball->reply);
+	$index = rand(0, $count);
 	$msg = "Magic 8-Ball: " . $xml->magic8ball->reply[$index];
 	sendMsg($msg);
 }
@@ -569,6 +643,14 @@ function doAlias($cmd, $args) {
 	global $xmlArr;
 	global $isAdmin;
 	global $cmd_prefix;
+	if ($args[0] == "all") {
+		foreach($xmlArr["alias"] as $k => $v) {
+			$msg .= "$k: $v\n";
+		}
+		$msg = substr($msg, 0, -1);
+		sendMsg($msg);
+		return;
+	}
 	$cmd = $xmlArr["alias"][$cmd];
 	array_splice($args, 0, 0, $cmd);
 	$cmd = $cmd_prefix . implode(" ", $args);
@@ -595,7 +677,13 @@ function sendHelp() {
 	global $isAdmin;
 	$helpStr = format("Command Prefix: {0}
 League: {1}
-Commands: 
+Commands:
+{0}tl team              : Gets the DaddyLeague link for that team
+{0}ps options           : Gets the DaddyLeague link for the player(s) with that name
+{0}sync week            : Gets all scores for the specified week
+{0}unplayed week        : Gets all unplayed games for the specified week
+{0}tws team week        : Gets the scoreline for the specified team at the specified week
+{0}week                 : Gets current week and a link to the schedule 
 {0}twitch team [popout] : Gets a link to the twitch for the specified team
 {0}custom [key]         : Gets custom info based on specified key (e.g. hello)
 {0}info [key]           : Gets info based on specified key (e.g. rules, adv, owners, draft)
@@ -615,11 +703,6 @@ ADMIN COMMANDS
 	}
 	sendMsg($helpStr);
 	/*
-{0}tl team              : Gets the DaddyLeague link for that team
-{0}ps options           : Gets the DaddyLeague link for the player(s) with that name
-{0}sync week            : Gets all scores for the specified week
-{0}tws team week        : Gets the scoreline for the specified team at the specified week
-{0}week                 : Gets current week and a link to the schedule
 	*/
 }
 

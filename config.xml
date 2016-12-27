@@ -21,10 +21,10 @@
 		<ring>http://vignette3.wikia.nocookie.net/lotr/images/9/9b/TheOneRing.jpg</ring>
 	</img>
 	<youtube>
-		<signman>https://www.youtube.com/channel/UCzLK6pOdCYmkEWWoEIxOJ2g</signman>
 	</youtube>
 	<custom>
 		<hello>hello world!</hello>
+		<tiebreakers>http://www.nfl.com/standings/tiebreakingprocedures</tiebreakers>
 	</custom>
 	<rings>
 	</rings>
@@ -47,7 +47,7 @@
 		
 		<hou/>
 		<ind/>
-		<jac/>
+		<jax/>
 		<ten/>
 		
 		<den/>
@@ -75,6 +75,8 @@
 		<sf/>
 		<la/>
 	</twitch>
+	<simscores>
+	</simscores>
 	<magic8ball>
 		<reply>It is certain</reply>
 		<reply>It is decidedly so</reply>

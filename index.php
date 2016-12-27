@@ -56,6 +56,10 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			sendLeagueScoresForWeek($command[1]);
 			break;
 
+		case "unplayed": // get unplayed games for 1 week
+			sendLeagueScoresForWeek($command[1], TRUE);
+			break;
+
 		case "week": // get current week
 			sendCurrentWeek();
 			break;
@@ -74,11 +78,18 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			sendInfo($command[1]);
 			break;
 			
-		case "rings": // get info
+		case "rings": // get rings
 			if (!array_key_exists(1, $command) || $command[1] == "") {
 				$command[1] = "all";
 			}
 			sendRings($command[1]);
+			break;
+			
+		case "simscores": // get simscores
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			sendSimScores($command[1]);
 			break;
 			
 		case "img": // get img
@@ -107,6 +118,13 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 				$command[1] = "all";
 			}
 			sendEmoji($command[1]);
+			break;
+			
+		case "alias": // get alias
+			if (!array_key_exists(1, $command) || $command[1] == "") {
+				$command[1] = "all";
+			}
+			doAlias($cmd, array_slice($command, 1));
 			break;
 			
 		case "8ball": // get 8ball
@@ -148,10 +166,10 @@ if (substr($command[0], 0, strlen($cmd_prefix)) == $cmd_prefix){
 			break;
 	}
 } 
-else if (!$msgText && !$json) { // testing zone
+else if (!$msgText && !$iMsgText && !$json) { // testing zone
 	//sendTeamWeekScore("ten", "1");
-	//sendLeagueScoresForWeek("8");
-	//sendPlayerSearch(array("marcus"));
+	sendLeagueScoresForWeek("11", TRUE);
+	//sendPlayerSearch(array("marcus mariota"));
 	//sendCurrentWeek();
 	//sendMsg("Rule Book: $rules");
 	//sendTwitchLink(array("nyj", "P"));
@@ -160,5 +178,6 @@ else if (!$msgText && !$json) { // testing zone
 	//setCustom(array("testing", "this is a test"));
 	//sendRings("all");
 	//doAlias("contact", array());
+	//send8Ball();
 }
 ?>
