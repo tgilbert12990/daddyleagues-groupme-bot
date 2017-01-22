@@ -28,10 +28,8 @@ but I have added the file directly in the repository.
 1. Install git
 2. Run this command from the command line to clone the repository and 
 go into the directory: 
-  * ```
-  git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git
-  cd daddyleagues-groupme-bot
-  ```
+  * `git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git`
+  * `cd daddyleagues-groupme-bot`
 3. Create a bot for the main groupme at https://dev.groupme.com/bots
   * select the desired group
 4. Copy the bot id and paste it into the $bot_token variable
@@ -40,11 +38,10 @@ in "mainBot.php".
 6. Edit "config.xml" appropiately. See below for info regarding it. 
 7. Deploy the app
   * Run these commands:
-  ```heroku create
-  git commit -am "initial push"
-  git push heroku master
-  heroku ps:scale web=1
-  ```
+    *`heroku create`
+    * `git commit -am "initial push"`
+    * `git push heroku master`
+    * `heroku ps:scale web=1`
 8. Put the URLs for mainBot.php and adminBot.php in the correct URL
   callback fields
   * Run `heroku open mainBot.php`
