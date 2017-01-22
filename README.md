@@ -27,10 +27,11 @@ but I have added the file directly in the repository.
 
 1. Install git
 2. Run this command from the command line to clone the repository and 
-go into the directory: 	```
-git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git
-cd daddyleagues-groupme-bot
-```
+go into the directory: 
+  ```
+  git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git
+  cd daddyleagues-groupme-bot
+  ```
 3. Create a bot for the main groupme at https://dev.groupme.com/bots
   * select the desired group
 4. Copy the bot id and paste it into the $bot_token variable
