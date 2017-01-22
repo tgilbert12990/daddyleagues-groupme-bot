@@ -8,57 +8,99 @@ This is an unofficial Groupme bot that you can use
 in conjuction with a Madden league on Daddyleagues. 
 
 There are actually 2 bots. 1 for the main groupme, 
-and 1 for and admin groupme. They use mostly the same
+and 1 for an admin groupme. They use mostly the same
 code, but the admin bot adds a couple of commands. 
 
 ---
 
 ### Dependencies
 
-This bot depends on the httpful library. Download it at 
+This bot depends on the httpful library from 
 http://phphttpclient.com/
-and simply upload the httpful.phar file to the same directory
-as the bots. 
+but I have added the file directly in the repository.
 
 ---
 
 ### Installation
 
-1. Edit the config.xml file to your needs. 
-  * config attributes
-    * league: the daddyleagues directory of your league 
-	(example: league website is "http://daddyleagues.com/TSL", 
-	use "TSL")
-    * cmdprefix: what will preceed each command
-    * pslimit: the maximum numberr of players a player 
-    search will return
-    * charlimit: If a message by the bot exceeds this, the bot will send a link
-    to get.php that will generate the message when visited
-  * info attributes
-    * league: the name of the league
-	* commish: the league's commisioner
-	* rules: a link to the rules (or you could just put the 
-	rules there)
-	* owners: a link to the owner list (or you could just put 
-	the owner list there)
-	* advance: the next scheduled advance
-	* draft: the next scheduled draft
-	* botdev: I ask that you leave this setting as-is
-  * custom: this is for info you don't want in the info section for when someone
-  asks for all info
-  * rings: the list of people with Super Bowl victories and how many they have
-  * alias: all aliases - an alias is a command that executes another command
-  * twitch attributes
-    * put the twitch user name for each team's owner 
-  * magic8ball: all the 8ball answers
-  * emoji: all the ermojis
-2. Upload the files to a server.
+#### Installing on Heroku
+
+1. Install git
+2. Run this command from the command line to clone the repository and 
+go into the directory: 	```
+git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git
+cd daddyleagues-groupme-bot
+```
 3. Create a bot for the main groupme at https://dev.groupme.com/bots
-  * select the desired group 
-  * paste the mainBot.php url into the Callback URL field
+  * select the desired group
 4. Copy the bot id and paste it into the $bot_token variable
-in "mainBot.php" then reupload it.
+in "mainBot.php".
 5. Repeat steps 3 and 4, but for the admin bot. 
+6. Edit "config.xml" appropiately. See below for info regarding it. 
+7. Deploy the app
+  * Run these commands:
+  ```heroku create
+  git commit -am "initial push"
+  git push heroku master
+  heroku ps:scale web=1
+  ```
+8. Put the URLs for mainBot.php and adminBot.php in the correct URL
+  callback fields
+  * Run `heroku open mainBot.php`
+  * Copy that URL into the mainBot URL callback field
+  * Run `heroku open adminBot.php`
+  * Copy that URL into the adminBot URL callback field
+
+#### Installing on a Web Server
+
+1. Download the files
+2. Create a bot for the main groupme at https://dev.groupme.com/bots
+  * select the desired group 
+3. Copy the bot id and paste it into the $bot_token variable
+in "mainBot.php".
+4. Repeat steps 2 and 3, but for the admin bot (adminBot.php). 
+5. Edit "config.xml" appropiately. See below for info regarding it. 
+6. Upload the files to a web server.
+7. Put the URLs for mainBot.php and adminBot.php in the correct URL
+  callback fields
+  * put "http://yoururl.com/path/to/bot/mainBot.php" in the mainBot 
+  URL callback field
+  * put "http://yoururl.com/path/to/bot/adminBot.php" in the adminBot 
+  URL callback field
+
+#### The Config File
+Edit the config.xml file to your needs. 
+
+* config attributes
+  * league: the daddyleagues directory of your league 
+  (example: league website is "http://daddyleagues.com/TSL", 
+  use "TSL")
+  * cmdprefix: what will preceed each command
+  * pslimit: the maximum numberr of players a player 
+  search will return
+  * charlimit: If a message by the bot exceeds this, the bot will 
+  send a link to get.php that will generate the message when visited
+* info attributes
+  * league: the name of the league
+  * commish: the league's commisioner
+  * rules: a link to the rules (or you could just put the 
+  rules there)
+  * owners: a link to the owner list (or you could just put 
+  the owner list there)
+  * advance: the next scheduled advance
+  * draft: the next scheduled draft
+  * botdev: I ask that you leave this setting as-is
+* custom: this is for info you don't want in the info section for 
+when someone asks for all info and also for custom commands that will
+have more options in future versions of this bot
+* rings: the list of people with Super Bowl victories and how many 
+they have
+* alias: all aliases - an alias is a command that executes another 
+command
+* twitch attributes
+  * put the twitch user name for each team's owner 
+* magic8ball: all the 8ball answers
+* emoji: all the ermojis
 
 ---
 
@@ -164,15 +206,16 @@ advance" or "?set alias adv advance", either way will work.
 
 ---
 
-My next task is to refactor some of the code. 
+My next task is to refactor some of the code and add the ability to register users 
+and user groups. 
 
 ---
 
 ## LICENSE
 
-This plugin is being made available under the MIT License as found in the 
+This bot is being made available under the MIT License as found in the 
 repository.
 
 If you use it in your own project, please let me know. While you are not 
-required to letr me know you are using it, I think it would be cool to see what 
-others are using it for. 
+required to let me know you are using it, I think it would be cool to 
+see what others are using it for. 
