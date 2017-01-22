@@ -37,13 +37,13 @@ in "mainBot.php".
 5. Repeat steps 3 and 4, but for the admin bot. 
 6. Edit "config.xml" appropiately. See below for info regarding it. 
 7. Deploy the app
-  * Run these commands:
-    *`heroku create`
+  * Run these commands: 
+    * `heroku create`
     * `git commit -am "initial push"`
     * `git push heroku master`
     * `heroku ps:scale web=1`
 8. Put the URLs for mainBot.php and adminBot.php in the correct URL
-  callback fields
+  callback fields: 
   * Run `heroku open mainBot.php`
   * Copy that URL into the mainBot URL callback field
   * Run `heroku open adminBot.php`
