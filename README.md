@@ -28,7 +28,7 @@ but I have added the file directly in the repository.
 1. Install git
 2. Run this command from the command line to clone the repository and 
 go into the directory: 
-  ```
+  * ```
   git clone https://github.com/kicker10BOG/daddyleagues-groupme-bot.git
   cd daddyleagues-groupme-bot
   ```
