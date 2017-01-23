@@ -34,7 +34,8 @@ function($msg){
 	
 	if (strlen($msg) > $char_limit) {
 		global $iMsgText;
-		$base = $_SERVER['SCRIPT_URI'];
+		$base = "http://" . $_SERVER['SERVER_NAME'];
+		$base = substr($base, 0, -1) . $_SERVER['REQUEST_URI'];
 		$scriptname = explode("/", $base);
 		$scriptname = $scriptname[count($scriptname)-1];
 		$base = str_replace($scriptname, "", $base);
@@ -42,6 +43,7 @@ function($msg){
 	}
 	$body = sprintf('{"text":%s,"bot_id":"%s"}', json_encode($msg), $bot_token);
 	$res = \Httpful\Request::post( $url )->sendsJson( )->body( $body )->send( );
+	//print_r($res);
 	//echo "<br>$res\n\n<br><br>$url\n\n<br><br>$body</br>";
 });
 
