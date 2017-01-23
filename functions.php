@@ -35,7 +35,7 @@ function($msg){
 	if (strlen($msg) > $char_limit) {
 		global $iMsgText;
 		$base = "http://" . $_SERVER['SERVER_NAME'];
-		$base = substr($base, 0, -1) . $_SERVER['REQUEST_URI'];
+		$base .= $_SERVER['REQUEST_URI'];
 		$scriptname = explode("/", $base);
 		$scriptname = $scriptname[count($scriptname)-1];
 		$base = str_replace($scriptname, "", $base);
