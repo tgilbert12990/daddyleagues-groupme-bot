@@ -124,9 +124,9 @@ Notes:
 * tws team week: Returns the score for the specified tean and week
   * team: can be abbreviation or team name (ten or titans)
   * week: 1-17, wc, dr, cc, sb
-* sync week: Gets the unplayed games for a specified week
+* sync week: Gets the scores/schedule for a specified week
   * week: 1-17, wc, dr, cc, sb
-* unplayed week: Gets the scores/schedule for a specified week
+* unplayed week: Gets the unplayed games for a specified week
   * week: 1-17, wc, dr, cc, sb
 * week: Gets the current week according to daddyleagues
 * helpme: Returns a help message
