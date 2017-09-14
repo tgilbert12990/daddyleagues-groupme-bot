@@ -10,11 +10,11 @@ $teamNamesToAbbr = array(
 	"bills" => "buf", "dolphins" => "mia", "patriots" => "ne", "jets" => "nyj",
 	"ravens" => "bal", "bengals" => "cin", "browns" => "cle", "steelers" => "pit",
 	"texans" => "hou", "colts" => "ind", "jaguars" => "jax", "jac" => "jax", "titans" => "ten",
-	"broncos" => "den", "chiefs" => "kc", "raiders" => "oak", "chargers" => "sd", 
+	"broncos" => "den", "chiefs" => "kc", "raiders" => "oak", "chargers" => "lac", "sd" => "lac",
 	"cowboys" => "dal", "giants" => "nyg", "eagles" => "phi", "redskins" => "was",
 	"bears" => "chi", "lions" => "det", "packers" => "gb", "vikings" => "min",
 	"falcons" => "atl", "panthers" => "car", "saints" => "no", "buccaneers" => "tb",
-	"cardinals" => "ari", "seahawks" => "sea", "49ers" => "sf", "rams" => "la", "stl" => "la"
+	"cardinals" => "ari", "seahawks" => "sea", "49ers" => "sf", "rams" => "lar", "stl" => "lar"
 );
 
 $positions = array(
