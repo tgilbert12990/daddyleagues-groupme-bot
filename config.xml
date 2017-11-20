@@ -2,7 +2,7 @@
 <all>
 	<config>
 		<baseurl>http://daddyleagues.com/</baseurl>
-		<league>TSL</league>
+		<league>lllMinded</league>
 		<cmdprefix>?</cmdprefix>
 		<pslimit>5</pslimit>
 		<charlimit>1000</charlimit>
@@ -14,7 +14,7 @@
 		<owners>put owners link here</owners>
 		<advance>MONDAY< WEDNESDAY< FRIDAYS AT 10 PM EASTERN</advance>
 		<draft>TBD</draft>
-		<botdev>https://github.com/kicker10BOG/daddyleagues-groupme-bot</botdev>
+		<botdev>https://github.com/tsgilbert12990/daddyleagues-groupme-bot</botdev>
 	</info>
 	<img>
 		<scalp>https://symonsez.files.wordpress.com/2009/08/scalp_edited.jpg</scalp>
