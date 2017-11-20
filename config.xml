@@ -8,12 +8,12 @@
 		<charlimit>1000</charlimit>
 	</config>
 	<info>
-		<league>The Test League (TTL)</league>
-		<commish>put commish name here</commish>
-		<rules>put rules link here</rules>
+		<league>lll Minded</league>
+		<commish>TEXANS here</commish>
+		<rules>http://daddyleagues.com/IlIMinded/rules/rules>
 		<owners>put owners link here</owners>
-		<advance>9/3, 5pm Central</advance>
-		<draft>9/3, 5pm Central</draft>
+		<advance>MONDAY< WEDNESDAY< FRIDAYS AT 10 PM EASTERN</advance>
+		<draft>TBD</draft>
 		<botdev>https://github.com/kicker10BOG/daddyleagues-groupme-bot</botdev>
 	</info>
 	<img>
