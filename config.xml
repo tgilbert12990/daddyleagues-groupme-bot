@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <all>
 	<config>
-		<baseurl>http://daddyleagues.com/</baseurl>
+		<baseurl>http://daddyleagues.com/IlI/minded</baseurl>
 		<league>LIL Ballers</league>
 		<cmdprefix>?</cmdprefix>
 		<pslimit>5</pslimit>
