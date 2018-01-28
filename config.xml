@@ -2,14 +2,14 @@
 <all>
 	<config>
 		<baseurl>http://daddyleagues.com/</baseurl>
-		<league>lllMinded</league>
+		<league>LIL Ballers</league>
 		<cmdprefix>?</cmdprefix>
 		<pslimit>5</pslimit>
 		<charlimit>1000</charlimit>
 	</config>
 	<info>
-		<league>lll Minded</league>
-		<commish>TEXANS here</commish>
+		<league>LIL Ballers</league>
+		<commish>Panthers here</commish>
 		<rules>http://daddyleagues.com/IlIMinded/rules/rules>
 		<owners>put owners link here</owners>
 		<advance>MONDAY< WEDNESDAY< FRIDAYS AT 10 PM EASTERN</advance>
@@ -30,7 +30,7 @@
 	</rings>
 	<alias>
 		<contact>owners</contact>
-		<adv>advance</adv>
+		<adv>Monday Wednesday and fridays at 10 PM Eastern.</adv>
 		<sim>advance</sim>
 		<nostradamus>8ball</nostradamus>
 	</alias>
@@ -78,26 +78,26 @@
 	<simscores>
 	</simscores>
 	<magic8ball>
-		<reply>It is certain</reply>
-		<reply>It is decidedly so</reply>
-		<reply>Without a doubt</reply>
-		<reply>Yes, definitely</reply>
-		<reply>You may rely on it</reply>
-		<reply>As I see it, yes</reply>
-		<reply>Most likely</reply>
-		<reply>Outlook good</reply>
-		<reply>Yes</reply>
-		<reply>Signs point to yes</reply>
-		<reply>Reply hazy. Try again</reply>
+		<reply>It is what it is</reply>
+		<reply>It sure as hell is</reply>
+		<reply>Not a fucking clue</reply>
+		<reply>Yes, noe leave me alone!</reply>
+		<reply>Not on my watch</reply>
+		<reply>Get the hell outta here</reply>
+		<reply>Shut the hell up/reply>
+		<reply>Eagles Suck</reply>
+		<reply>HTTR!</reply>
+		<reply>DEZ didnt catch it</reply>
+		<reply>Try again</reply>
 		<reply>Ask again later</reply>
-		<reply>Better not tell you</reply>
-		<reply>Cannot predict now</reply>
-		<reply>Concentrate and ask again</reply>
-		<reply>Don't count on it</reply>
-		<reply>My reply is no</reply>
-		<reply>My sources say no</reply>
-		<reply>Outlook not so good</reply>
-		<reply>Very doubtful</reply>
+		<reply>Cowboys star is their rating not logo</reply>
+		<reply>I HATE YOU </reply>
+		<reply>Haters gonna hate</reply>
+		<reply>Bitch Please</reply>
+		<reply>HELLO</reply>
+		<reply>Why the hell not</reply>
+		<reply>You think thats a smart idea</reply>
+		<reply>Hold My Beer</reply>
 	</magic8ball>
 	<emoji>
 		<wary>https://external-dft4-1.xx.fbcdn.net/safe_image.php?d=AQBrs2kQWoDr4JeY&amp;url=http%3A%2F%2Fprofile.ak.fbcdn.net%2Fhprofile-ak-snc4%2F373572_309448622428615_1815569583_q.jpg</wary>
